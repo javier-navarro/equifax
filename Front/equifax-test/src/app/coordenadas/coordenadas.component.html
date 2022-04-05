@@ -1,0 +1,59 @@
+
+
+<mat-card>
+    <mat-card-title> Busqueda de coordenadas</mat-card-title>
+    
+    <form [formGroup]="form" (ngSubmit)="buscar()">
+        
+        <mat-form-field appearance="fill">
+            <mat-label>Latitud</mat-label>
+            <mat-select [disabled]="deshabilitaLatitud" formControlName="latitud" (ngModelChange)="this.deshabilitarLongitud()">
+              <mat-option></mat-option>
+              <mat-option *ngFor="let coordenada of this.listax" [value]="coordenada.idCoordenadas">
+                {{coordenada.latitud}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      
+          <mat-form-field appearance="fill">
+              <mat-label>Longitud</mat-label>
+              <mat-select [disabled]="deshabilitaLongitud" formControlName="longitud" (ngModelChange)="this.deshabilitarLatitud()">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let coordenada of this.listax" [value]="coordenada.idCoordenadas">
+                  {{coordenada.longitud}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            
+          <button mat-flat-button color="primary">Buscar</button>
+    </form>
+    
+    <table mat-table [dataSource]="this.listax" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.idCoordenadas}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="latitud">
+          <th mat-header-cell *matHeaderCellDef> latitud </th>
+          <td mat-cell *matCellDef="let element"> {{element.latitud}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="longitud">
+            <th mat-header-cell *matHeaderCellDef> longitud </th>
+            <td mat-cell *matCellDef="let element"> {{element.longitud}} </td>
+          </ng-container>
+    
+        <ng-container matColumnDef="datos">
+            <th mat-header-cell *matHeaderCellDef> datos </th>
+            <td mat-cell *matCellDef="let element"> {{element.datos.detalleLatitud}} - {{ element.datos.detalleLongitud }} </td>
+          </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table> 
+    <button mat-flat-button color="primary" (click)="getCoordenadas();">Recargar Coordenadas</button>
+
+</mat-card>
+

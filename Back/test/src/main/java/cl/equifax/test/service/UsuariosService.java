@@ -41,17 +41,11 @@ public class UsuariosService {
 
     public TokenDto login(UsuariosDto usuariosDto){
         Optional<Usuarios> usuarios = usuariosRepository.findByUsername(usuariosDto.getUsername());
-        System.out.println("salida service: "+usuarios);
-        System.out.println("match: "+passwordEncoder.matches(usuariosDto.getPassword(),usuarios.get().getPassword()));
-        System.out.println("Entity: "+usuarios.get().getPassword());
 
-        System.out.println("Encode: "+passwordEncoder.encode(usuarios.get().getPassword()));
-        System.out.println("DTO: "+usuariosDto.getPassword());
         if(!usuarios.isPresent()){
             return null;
         }
         if(passwordEncoder.matches(usuariosDto.getPassword(),usuarios.get().getPassword())){
-            System.out.println("poraqui");
             return new TokenDto(jwtProvider.CreateToken(usuarios.get()));
         }
         return null;
@@ -59,14 +53,11 @@ public class UsuariosService {
 
 
     public TokenDto validate(String token){
-        System.out.println("token in: "+token);
         if(!jwtProvider.validate(token)){
-            System.out.println("jwt - 1");
             return null;
         }
         String username = jwtProvider.getUserNameFromToken(token);
         if(!usuariosRepository.findByUsername(username).isPresent()){
-            System.out.println("jwt - 2");
             return null;
         }
         return new TokenDto(token);

@@ -8,5 +8,6 @@ import java.util.List;
 public interface CoordenadasService {
     public List<Coordenadas> getCoordenadas(String token);
     public List<DetalleCoordenadas> listaDetalle();
+    public List<Coordenadas> findById(String token,Long id);
 
 }
