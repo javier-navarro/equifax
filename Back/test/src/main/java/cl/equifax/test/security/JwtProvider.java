@@ -25,7 +25,6 @@ public class JwtProvider {
 
     public String CreateToken(Usuarios usuarios){
 
-        System.out.println("[createToken] entrada: "+usuarios);
         Map<String,Object> claims = new HashMap<>();
         claims = Jwts.claims().setSubject(usuarios.getUsername());
         claims.put("id", usuarios.getIdUsuarios());
@@ -44,7 +43,6 @@ public class JwtProvider {
             Jwts.parser().setSigningKey(secreto).parseClaimsJws(token);
             return true;
         }catch (Exception e){
-            System.out.println("en el exception");
             return false;
         }
     }
